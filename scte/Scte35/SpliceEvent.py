@@ -17,7 +17,7 @@ class SpliceEvent:
             self._log = logging.getLogger()
         splice_descriptors = []
         bytes_left = descriptor_loop_length
-        i=0
+        i = 0
         while bytes_left > 0:
             new_descriptor = None
             if init_arr:
@@ -52,7 +52,11 @@ class SpliceEvent:
                 self.splice_info_section["time_signal"] = TimeSignal.from_dict(init_dict["time_signal"])
 
             if init_dict["descriptor_loop_length"] > 0:
-                self.splice_info_section["splice_descriptors"] = self.__parse_splice_descriptors(self.splice_info_section["descriptor_loop_length"], bitarray_data=None, init_arr=init_dict["splice_descriptors"])
+                self.splice_info_section["splice_descriptors"] = self.__parse_splice_descriptors(
+                    self.splice_info_section["descriptor_loop_length"],
+                    bitarray_data=None,
+                    init_arr=init_dict["splice_descriptors"]
+                )
 
             return
 
@@ -166,7 +170,7 @@ class SpliceEvent:
         if "splice_descriptors" in self.splice_info_section:
             the_dict["splice_descriptors"] = []
             for splice_descriptor in self.splice_info_section["splice_descriptors"]:
-                the_dict["splice_descriptors"] += [ splice_descriptor.as_dict(upid_as_str=True) ]
+                the_dict["splice_descriptors"] += [splice_descriptor.as_dict(upid_as_str=True)]
         return the_dict
 
     @classmethod

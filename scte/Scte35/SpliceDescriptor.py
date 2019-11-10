@@ -73,9 +73,9 @@ class SpliceDescriptor:
             bitstring_format += 'uint:8=segmentation_upid_type,' \
                                 'uint:8=segmentation_upid_length,' \
                                 'bytes:' + str(self.__obj_dict['segmentation_upid_length']) + '=segmentation_upid,' \
-                                                                                              'uint:8=segmentation_type_id,' \
-                                                                                              'uint:8=segment_num,' \
-                                                                                              'uint:8=segments_expected'
+                                'uint:8=segmentation_type_id,' \
+                                'uint:8=segment_num,' \
+                                'uint:8=segments_expected'
             if self.__obj_dict['segmentation_type_id'] in [0x34, 0x36]:
                 bitstring_format += ',uint:8=sub_segment_num,' \
                                     'uint:8=sub_segments_expected'

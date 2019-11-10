@@ -27,10 +27,11 @@ class SpliceInsert:
             self.splice_insert_info["duration_flag"] = bitarray_data.read("bool")
             self.splice_insert_info["splice_immediate_flag"] = bitarray_data.read("bool")
             self.splice_insert_info["reserved2"] = bitarray_data.read("uint:4")
-            if self.splice_insert_info["program_splice_flag"] is True and self.splice_insert_info["splice_immediate_flag"] is False:
+            if self.splice_insert_info["program_splice_flag"] is True \
+                    and self.splice_insert_info["splice_immediate_flag"] is False:
                 self.splice_insert_info["splice_time"] = TimeSignal(bitarray_data)
             if self.splice_insert_info["program_splice_flag"] is False:
-                pass
+                raise NotImplementedError('Can not interpret splice_insert events with program_splice_flag False')
             if self.splice_insert_info["duration_flag"] is True:
                 self.splice_insert_info["break_duration"] = BreakDuration(bitarray_data)
             self.splice_insert_info["unique_program_id"] = bitarray_data.read("uint:16")
@@ -73,7 +74,8 @@ class SpliceInsert:
                 **self.splice_insert_info
             )
 
-            if self.splice_insert_info["program_splice_flag"] is True and self.splice_insert_info["splice_immediate_flag"] is False:
+            if self.splice_insert_info["program_splice_flag"] is True \
+                    and self.splice_insert_info["splice_immediate_flag"] is False:
                 splice_time_bs = self.splice_insert_info["splice_time"].serialize()
 
             if self.splice_insert_info["duration_flag"] is True:
@@ -82,4 +84,3 @@ class SpliceInsert:
             trailing_fields_bs = bitstring.pack(fmt=self.trailing_fields_bitstring_format, **self.splice_insert_info)
 
         return splice_insert_section_bs + splice_insert_detail_bs + splice_time_bs + break_duration_bs + trailing_fields_bs
-
