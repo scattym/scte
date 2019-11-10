@@ -121,7 +121,6 @@ class SpliceEvent:
         self.position = self.position + bytes*byte_size
         return None
 
-
     def hex_string(self, value, bytes):
         s = hex(value) 
         return '0x' + s[2:].zfill(bytes*2)

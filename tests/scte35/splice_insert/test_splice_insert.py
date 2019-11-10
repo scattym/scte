@@ -9,6 +9,7 @@ TEST_VECTORS = {
     "google_ad_example": "/DAlAAAAAAAAAP/wFAUAAAAEf+/+kybGyP4BSvaQAAEBAQAArky/3g=="
 }
 
+
 class SpliceInsertTests(unittest.TestCase):
     def setUp(self):
         logger = logging.getLogger('')
