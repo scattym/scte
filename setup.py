@@ -1,7 +1,7 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 setup(
   name='scte',
-  packages=['scte', 'scte.Scte35', 'scte.Scte104'],
+  packages=find_packages(),
   version='1.1.1',
   license='apache-2.0',
   description='Tools for working with SCTE standards.',
