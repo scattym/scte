@@ -69,7 +69,7 @@ class SpliceEvent:
         self.splice_info_section["table_id"] = bitarray_data.read("uint:8")
         self.splice_info_section["section_syntax_indicator"] = bitarray_data.read("bool")
         self.splice_info_section["private"] = bitarray_data.read("bool")
-        bitarray_data.pos += 2 # Reserved
+        self.splice_info_section["reserved"] = bitarray_data.read("uint:2")
         self.splice_info_section["section_length"] = bitarray_data.read("uint:12")
         self.splice_info_section["protocol_version"] = bitarray_data.read("uint:8")
         self.splice_info_section["encrypted_packet"] = bitarray_data.read("bool")
@@ -114,7 +114,7 @@ class SpliceEvent:
         bitstring_format = 'uint:8=table_id,' \
                            'bool=section_syntax_indicator,' \
                            'bool=private,' \
-                           'uint:2=0,' \
+                           'uint:2=reserved,' \
                            'uint:12=section_length,' \
                            'uint:8=protocol_version,' \
                            'bool=encrypted_packet,' \
