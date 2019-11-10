@@ -1,4 +1,6 @@
 #!/usr/bin/env
+import base64
+
 from scte.Scte35 import SpliceEvent, SpliceDescriptor
 import json
 
@@ -10,7 +12,8 @@ import json
 
 #Zero Length UPID
 test_string = "/DA6AAAAAsrbAP/wBQb+Bp8k9gAkAiJDVUVJAAAAAX//AAE07tIBDkVQMDAwMDExODk0OTU0AQUAONWP9g=="
-
+#test_string = "/DAlAAAAAAAAAP/wFAUAAAAEf+/+kybGyP4BSvaQAAEBAQAArky/3g=="
+print(base64.b64decode(test_string).hex())
 myEvent = SpliceEvent(test_string)
 
 print("event from b64 : " + str(myEvent.splice_info_section))
@@ -18,6 +21,8 @@ print("event from b64 : " + str(myEvent.splice_info_section))
 
 hx = myEvent.hex_string
 print("hex of event from b64: " + hx)
+
+# print(base64.b64encode(myEvent.serialize()))
 
 myEvent = SpliceEvent.from_hex_string(hx)
 print("formed from hex: " + str(myEvent.splice_info_section))

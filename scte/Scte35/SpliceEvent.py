@@ -96,7 +96,10 @@ class SpliceEvent:
         # Loop length is number of total bytes for descriptors
         self.splice_info_section["descriptor_loop_length"] = bitarray_data.read("uint:16")
         if self.splice_info_section["descriptor_loop_length"] > 0:
-            self.splice_info_section["splice_descriptors"] = self.__parse_splice_descriptors(self.splice_info_section["descriptor_loop_length"], bitarray_data)
+            self.splice_info_section["splice_descriptors"] = self.__parse_splice_descriptors(
+                self.splice_info_section["descriptor_loop_length"], bitarray_data
+            )
+        self.splice_info_section["crc_32"] = bitarray_data.read("uint:32")
 
     #
     @property
@@ -123,7 +126,6 @@ class SpliceEvent:
                            'uint:8=splice_command_type'
         return bitstring_format
 
-
     def serialize(self):
         splice_info_section_begin_bs = bitstring.pack(fmt=self.bitstring_format, **self.splice_info_section)
 
@@ -135,7 +137,8 @@ class SpliceEvent:
             raise NotImplementedError('Can not interpret splice_schedule events')
 
         elif self.splice_info_section["splice_command_type"] is 5:
-            raise NotImplementedError('Can not interpret splice_insert events')
+            splice_command_type_bs = self.splice_info_section["splice_insert"].serialize()
+            # raise NotImplementedError('Can not interpret splice_insert events')
 
         elif self.splice_info_section["splice_command_type"] is 6:
             splice_command_type_bs = self.splice_info_section["time_signal"].serialize()
@@ -147,7 +150,9 @@ class SpliceEvent:
             for splice_descriptor in self.splice_info_section["splice_descriptors"]:
                 splice_descriptors_bs += splice_descriptor.serialize()
 
-        return splice_info_section_begin_bs + splice_command_type_bs + descriptor_loop_length_bs + splice_descriptors_bs
+        crc_32_bs = bitstring.pack(fmt='uint:32=crc_32', **self.splice_info_section)
+
+        return splice_info_section_begin_bs + splice_command_type_bs + descriptor_loop_length_bs + splice_descriptors_bs + crc_32_bs
 
     @property
     def hex_string(self):
