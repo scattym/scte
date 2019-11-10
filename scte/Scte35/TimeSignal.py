@@ -15,14 +15,14 @@ class TimeSignal:
         self.splice_time = {}
         self.splice_time["time_specified_flag"] = bitarray_data.read("bool")
         if self.splice_time["time_specified_flag"] is True:
-            bitarray_data.pos += 6
+            self.splice_time["reserved"] = bitarray_data.read("uint:6")
             self.splice_time["pts_time"] = bitarray_data.read("uint:33")
 
     def bitstring_format(self):
         bitstring_format = 'bool=time_specified_flag'
 
         if self.splice_time["time_specified_flag"] is True:
-            bitstring_format += ',' + 'uint:6=0,' \
+            bitstring_format += ',' + 'uint:6=reserved,' \
                                       'uint:33=pts_time'
 
         return bitstring_format
