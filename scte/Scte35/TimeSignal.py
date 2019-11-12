@@ -1,13 +1,9 @@
 import bitstring
 import logging
-
+logger = logging.getLogger(__name__)
 
 class TimeSignal:
-    def __init__(self, bitarray_data, init_dict=None, logger=None):
-        if logger is not None:
-            self._log = logger
-        else:
-            self._log = logging.getLogger()
+    def __init__(self, bitarray_data, init_dict=None):
         if init_dict:
             self.splice_time = init_dict
             return

@@ -1,10 +1,6 @@
 import logging
-
+logger = logging.getLogger(__name__)
 
 class SpliceSchedule:
-    def __init__(self, bitarray_data, logger=None):
-        if logger is not None:
-            self._log = logger
-        else:
-            self._log = logging.getLogger()
-        None
+    def __init__(self, bitarray_data):
+        pass

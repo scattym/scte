@@ -2,14 +2,10 @@ import bitstring
 import copy
 from scte.Scte35 import SegmentationDescriptor
 import logging
-
+logger = logging.getLogger(__name__)
 
 class SpliceDescriptor:
-    def __init__(self, bitarray_data, init_dict=None, logger=None):
-        if logger is not None:
-            self._log = logger
-        else:
-            self._log = logging.getLogger()
+    def __init__(self, bitarray_data, init_dict=None):
         if init_dict:
             if 'reserved1' not in init_dict:
                 init_dict['reserved1'] = 127

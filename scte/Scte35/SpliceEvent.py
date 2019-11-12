@@ -7,14 +7,11 @@ from scte.Scte35.SpliceNull import SpliceNull
 from scte.Scte35.SpliceInsert import SpliceInsert
 from scte.Scte35.SpliceSchedule import SpliceSchedule
 import logging
+logger = logging.getLogger(__name__)
 
 
 class SpliceEvent:
-    def __parse_splice_descriptors(self, descriptor_loop_length, bitarray_data, init_arr=None, logger=None):
-        if logger is not None:
-            self._log = logger
-        else:
-            self._log = logging.getLogger()
+    def __parse_splice_descriptors(self, descriptor_loop_length, bitarray_data, init_arr=None):
         splice_descriptors = []
         bytes_left = descriptor_loop_length
         i = 0
@@ -104,6 +101,7 @@ class SpliceEvent:
                 self.splice_info_section["descriptor_loop_length"], bitarray_data
             )
         self.splice_info_section["crc_32"] = bitarray_data.read("uint:32")
+        logger.debug("Splice event: %s", self.splice_info_section)
 
     #
     @property

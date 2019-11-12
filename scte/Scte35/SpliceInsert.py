@@ -5,14 +5,11 @@ import bitstring
 from scte.Scte35.BreakDuration import BreakDuration
 from scte.Scte35.TimeSignal import TimeSignal
 
+logger = logging.getLogger(__name__)
+
 
 class SpliceInsert:
-    def __init__(self, bitarray_data, init_dict=None, logger=None):
-        if logger is not None:
-            self._log = logger
-        else:
-            self._log = logging.getLogger()
-        None
+    def __init__(self, bitarray_data, init_dict=None):
         if init_dict:
             self.splice_insert_info = init_dict
             return
@@ -37,6 +34,7 @@ class SpliceInsert:
             self.splice_insert_info["unique_program_id"] = bitarray_data.read("uint:16")
             self.splice_insert_info["avail_num"] = bitarray_data.read("uint:8")
             self.splice_insert_info["avails_expected"] = bitarray_data.read("uint:8")
+        logger.debug("Splice insert: %s", self.splice_insert_info)
 
     @property
     def bitstring_format(self):
